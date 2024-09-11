@@ -179,11 +179,13 @@ def play(strategy0, strategy1, update,
     who = 0  # Who is about to take a turn, 0 (first) or 1 (second)
     # BEGIN PROBLEM 5
     "*** YOUR CODE HERE ***"
-    while score0 <100 and score1 < 100:
+    while score0 <goal and score1 < goal:
+       # num0 = strategy0(score0,score1)
+       # num1 = strategy1(score1,score0)
         if who == 0:
-            score0 += update(strategy0,score0,score1,dice)
+            score0 = update(strategy0(score0,score1),score0,score1,dice)
         if who == 1:
-            score0 += update(strategy1,score1,score0,dice)
+            score1 = update(strategy1(score1,score0),score1,score0,dice)
         who = 1-who
         
     # END PROBLEM 5
@@ -268,6 +270,12 @@ def make_averaged(original_function, samples_count=1000):
     """
     # BEGIN PROBLEM 8
     "*** YOUR CODE HERE ***"
+    def average(*args):
+        total = 0
+        for i in range(samples_count):
+            total += original_function(*args)
+        return total
+    return average
     # END PROBLEM 8
 
 
@@ -282,6 +290,17 @@ def max_scoring_num_rolls(dice=six_sided, samples_count=1000):
     """
     # BEGIN PROBLEM 9
     "*** YOUR CODE HERE ***"
+    max = 0
+    max_num_of_rools = 1
+    average_dice = make_averaged(roll_dice,samples_count)
+    for i in range (1,11):
+        cur_num = average_dice(i,dice)
+        if cur_num > max:
+            max = cur_num
+            max_num_of_rools = i
+    return max_num_of_rools
+
+    
     # END PROBLEM 9
 
 
