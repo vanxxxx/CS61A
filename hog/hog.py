@@ -366,6 +366,10 @@ def final_strategy(score, opponent_score):
     *** YOUR DESCRIPTION HERE ***
     """
     # BEGIN PROBLEM 12
+    average_dice = make_averaged(roll_dice,100)
+    threshold = max (average_dice(6) , (GOAL-score))
+    if sus_strategy(score, opponent_score,threshold,6):
+        return 0
     return 6  # Remove this line once implemented.
     # END PROBLEM 12
 
