@@ -22,7 +22,13 @@ def num_eights(x):
     ...       ['Assign', 'AugAssign'])
     True
     """
-    "*** YOUR CODE HERE ***"
+    "*** YOUR CODE HERE **"
+    count = 0
+    if x ==0:
+        return 0
+    elif x % 10 == 8:
+        count += 1
+    return count + num_eights(x-1)
 
 
 def pingpong(n):
@@ -58,6 +64,7 @@ def pingpong(n):
     True
     """
     "*** YOUR CODE HERE ***"
+
 
 
 def missing_digits(n):
