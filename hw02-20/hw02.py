@@ -148,11 +148,18 @@ def count_coins(total):
     True
     """
     "*** YOUR CODE HERE ***"
-    def helper(total )
-        if total = 1:
-            return 1
-        elif total = 0:
+    def helper(largest_coin,coin):
+        if not  largest_coin :
             return 0
+        if coin == 0:
+            return 1 
+        if coin < 0 :
+            return 0
+        a = helper(largest_coin,coin-largest_coin)
+        b = helper(next_largest_coin(largest_coin),coin)
+        return a+b
+    return helper(1,total)
+
         
 
 
