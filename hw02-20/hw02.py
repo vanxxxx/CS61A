@@ -148,6 +148,12 @@ def count_coins(total):
     True
     """
     "*** YOUR CODE HERE ***"
+    def helper(total )
+        if total = 1:
+            return 1
+        elif total = 0:
+            return 0
+        
 
 
 from operator import sub, mul
