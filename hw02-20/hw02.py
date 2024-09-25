@@ -105,7 +105,14 @@ def missing_digits(n):
     True
     """
     "*** YOUR CODE HERE ***"
-
+    if n<10:
+        return 0
+    last_digit = n%10
+    secondlast_digit = n//10%10
+    if (last_digit - secondlast_digit)<=1:
+        return (0+missing_digits(n//10))
+    else:
+        return (last_digit-secondlast_digit-1+missing_digits(n//10))
 
 def next_largest_coin(coin):
     """Return the next coin. 
