@@ -23,12 +23,9 @@ def num_eights(x):
     True
     """
     "*** YOUR CODE HERE **"
-    count = 0
-    if x ==0:
+    if x == 0:
         return 0
-    elif x % 10 == 8:
-        count += 1
-    return count + num_eights(x-1)
+    return (x % 10 ==8) + num_eights(x //10)
 
 
 def pingpong(n):
@@ -64,6 +61,7 @@ def pingpong(n):
     True
     """
     "*** YOUR CODE HERE ***"
+    
 
 
 
