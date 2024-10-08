@@ -31,6 +31,10 @@ def pick(paragraphs, select, k):
     """
     # BEGIN PROBLEM 1
     "*** YOUR CODE HERE ***"
+    helper = [x for x in paragraphs if select(x)]
+    if k > len(helper)-1 :
+        return ''
+    return helper[k]
     # END PROBLEM 1
 
 
@@ -50,6 +54,15 @@ def about(subject):
     assert all([lower(x) == x for x in subject]), 'subjects should be lowercase.'
     # BEGIN PROBLEM 2
     "*** YOUR CODE HERE ***"
+    def helper(text):
+        words =[remove_punctuation(lower(s)) for s in subject]
+        text = split(lower(remove_punctuation(text)))
+        for a in words:
+            for b in text:
+                if a==b:
+                    return True
+        return False
+    return helper
     # END PROBLEM 2
 
 
