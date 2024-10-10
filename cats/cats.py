@@ -198,7 +198,15 @@ def feline_fixes(typed, source, limit):
     5
     """
     # BEGIN PROBLEM 6
-    assert False, 'Remove this line'
+   # assert False, 'Remove this line'
+    
+    if limit <0:
+        return 1
+    if typed == '':
+        return len(source)
+    elif source == '':
+        return len (typed)
+    return (source[0]!=typed[0])+ feline_fixes(typed[1:],source[1:],limit-(source[0]!=typed[0]))
     # END PROBLEM 6
 
 
