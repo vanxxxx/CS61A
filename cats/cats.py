@@ -160,6 +160,18 @@ def autocorrect(typed_word, word_list, diff_function, limit):
     """
     # BEGIN PROBLEM 5
     "*** YOUR CODE HERE ***"
+    correct_word= typed_word
+    diff = 100
+    for word in word_list:
+        if word == typed_word:
+            return typed_word
+        if diff_function(typed_word,word,limit)< diff:
+            diff = diff_function(typed_word,word,limit)
+            correct_word = word
+    if diff > limit:
+        return typed_word
+    return correct_word
+        
     # END PROBLEM 5
 
 
