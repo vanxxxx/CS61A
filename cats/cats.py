@@ -236,16 +236,19 @@ def minimum_mewtations(typed, source, limit):
         return abs(len(typed)-len(source))
         # END
     # Recursive cases should go below here
+    if limit <0:
+        return 1
     if typed[0]==source[0]: # Feel free to remove or add additional cases
         # BEGIN
         "*** YOUR CODE HERE ***"
         return minimum_mewtations(typed[1:],source[1:],limit)
         # END
     else:
-        add = ... # Fill in these lines
-        remove = ...
-        substitute = ...
-        # BEGIN
+        
+        substitute = 1 + minimum_mewtations(typed[1:],source[1:],limit-1)
+        add = 1 + minimum_mewtations(typed,source[1:],limit-1)
+        delete = 1 + minimum_mewtations(typed[1:],source,limit -1 )
+        return min(substitute,add,delete)
         "*** YOUR CODE HERE ***"
         # END
 
