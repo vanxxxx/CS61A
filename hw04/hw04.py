@@ -74,11 +74,13 @@ def end(s):
 def planet(mass):
     """Construct a planet of some mass."""
     assert mass > 0
+    return ['planet', mass]
     "*** YOUR CODE HERE ***"
 
 def mass(p):
     """Select the mass of a planet."""
     assert is_planet(p), 'must call mass on a planet'
+    return p[1]
     "*** YOUR CODE HERE ***"
 
 def is_planet(p):
@@ -132,6 +134,15 @@ def balanced(m):
     True
     """
     "*** YOUR CODE HERE ***"
+    if is_planet(m):
+        return True
+
+    if is_mobile(m):
+        if total_mass(end(left(m)))*length(left(m)) != total_mass(end(right(m)))*length(right(m)):
+            return False
+        else:
+            return balanced(end(left(m))) and balanced(end(right(m)))
+
 
 
 HW_SOURCE_FILE=__file__
