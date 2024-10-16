@@ -158,7 +158,12 @@ def max_path_sum(t):
     17
     """
     "*** YOUR CODE HERE ***"
-
+    def helper(t):
+        if is_leaf(t):
+            return label(t)
+        else:
+            return label(t)+max([helper(b) for b in branches(t)])
+    return helper(t)
 
 
 # Tree Data Abstraction
