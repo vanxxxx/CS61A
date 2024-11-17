@@ -295,3 +295,9 @@ class ChangeMachine:
         """Return change for coin, removing the result from self.coins."""
         "*** YOUR CODE HERE ***"
 
+        self.coins[coin] = self.coins.get(coin,0) + 1
+        helper = make_change(coin,self.coins)
+        for c in helper:
+            self.coins = remove_one(self.coins,c)
+        return helper
+
