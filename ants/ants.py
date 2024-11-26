@@ -273,7 +273,13 @@ class FireAnt(Ant):
 # BEGIN Problem 6
 # The WallAnt class
 # END Problem 6
-
+class WallAnt(Ant):
+    name = 'Wall'
+    food_cost = 4
+    implemented = True
+    def __init__(self,health = 4):
+        super().__init__(health)
+        
 # BEGIN Problem 7
 # The HungryAnt Class
 # END Problem 7
