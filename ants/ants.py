@@ -13,7 +13,7 @@ class Place:
     """A Place holds insects and has an exit to another Place."""
     is_hive = False
 
-    def __init__(self, name, exit=None):
+    def __init__(self, name, exit=None,entrance = None):
         """Create a Place with the given NAME and EXIT.
 
         name -- A string; the name of this Place.
@@ -23,10 +23,13 @@ class Place:
         self.exit = exit
         self.bees = []        # A list of Bees
         self.ant = None       # An Ant
-        self.entrance = None  # A Place
+        self.entrance = entrance  # A Place
         # Phase 1: Add an entrance to the exit
         # BEGIN Problem 2
         "*** YOUR CODE HERE ***"
+        if exit:
+            exit.entrance = self
+
         # END Problem 2
 
     def add_insect(self, insect):
