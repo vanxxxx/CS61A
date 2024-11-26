@@ -120,12 +120,13 @@ class Ant(Insect):
             place.ant = self
         else:
             # BEGIN Problem b
-            if place.ant.is_container:
-                if not self.is_container:
+            if place.ant.is_container and place.ant.ant_contained is None:
+                if not self.is_container :
                     place.ant.ant_contained = self
-            elif self.is_container:
-                if not place.ant.is_container:
+            elif self.is_container and self.ant_contained is None:
+                if not place.ant.is_container :
                     self.ant_contained = place.ant
+                    place.ant = self
             else:
                 assert place.ant is None, 'Too many ants in {0}'.format(place)
             # END Problem 8b
