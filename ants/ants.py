@@ -282,6 +282,26 @@ class WallAnt(Ant):
         
 # BEGIN Problem 7
 # The HungryAnt Class
+class HungryAnt(Ant):
+    name = 'Hungry'
+    chewing_turns = 3
+    food_cost = 4
+    implemented = True
+
+    def __init__(self,health = 1):
+        super().__init__(health)
+        self.turns_to_chew = 0
+
+    def action(self,gamestate):
+        if self.turns_to_chew == 0:
+            if self.place.bees:
+                target = random_bee(self.place.bees)
+                target.reduce_health(target.health)
+                self.turns_to_chew = self.chewing_turns
+        else:
+            self.turns_to_chew -=1
+        
+
 # END Problem 7
 
 
