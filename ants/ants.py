@@ -13,7 +13,7 @@ class Place:
     """A Place holds insects and has an exit to another Place."""
     is_hive = False
 
-    def __init__(self, name, exit=None,entrance = None):
+    def __init__(self, name, exit=None, entrance=None):
         """Create a Place with the given NAME and EXIT.
 
         name -- A string; the name of this Place.
@@ -155,7 +155,7 @@ class HarvesterAnt(Ant):
         """
         # BEGIN Problem 1
         "*** YOUR CODE HERE ***"
-        gamestate.food +=1
+        gamestate.food += 1
         # END Problem 1
 
 
@@ -175,7 +175,12 @@ class ThrowerAnt(Ant):
         This method returns None if there is no such Bee (or none in range).
         """
         # BEGIN Problem 3 and 4
-        return random_bee(self.place.bees) # REPLACE THIS LINE
+        local = self.place
+        while (local.is_hive == False and local.bees == []):
+            local = local.entrance
+        if local.is_hive:
+            return None
+        return random_bee(local.bees)  # REPLACE THIS LINE
         # END Problem 3 and 4
 
     def throw_at(self, target):
@@ -191,7 +196,8 @@ class ThrowerAnt(Ant):
 def random_bee(bees):
     """Return a random bee from a list of bees, or return None if bees is empty."""
     assert isinstance(bees, list), \
-        "random_bee's argument should be a list but was a %s" % type(bees).__name__
+        "random_bee's argument should be a list but was a %s" % type(
+            bees).__name__
     if bees:
         return random.choice(bees)
 
@@ -355,8 +361,6 @@ class QueenAnt(ThrowerAnt):
         # END Problem 12
 
 
-
-
 ############
 # Optional #
 ############
@@ -459,7 +463,7 @@ class Bee(Insect):
 
     def add_to(self, place):
         place.bees.append(self)
-        super().add_to( place)
+        super().add_to(place)
 
     def remove_from(self, place):
         place.bees.remove(self)
@@ -510,6 +514,7 @@ class Hive(Place):
 # Game Components #
 ###################
 
+
 class GameState:
     """An ant collective that manages global game state and simulates time.
 
@@ -552,19 +557,19 @@ class GameState:
         create_places(self.base, register_place,
                       self.dimensions[0], self.dimensions[1])
 
-    def ants_take_actions(self): # Ask ants to take actions
+    def ants_take_actions(self):  # Ask ants to take actions
         for ant in self.ants:
             if ant.health > 0:
                 ant.action(self)
 
-    def bees_take_actions(self, num_bees): # Ask bees to take actions
+    def bees_take_actions(self, num_bees):  # Ask bees to take actions
         for bee in self.active_bees[:]:
             if bee.health > 0:
                 bee.action(self)
             if bee.health <= 0:
                 num_bees -= 1
                 self.active_bees.remove(bee)
-        if num_bees == 0: # Check if player won
+        if num_bees == 0:  # Check if player won
             raise AntsWinException()
         return num_bees
 
@@ -573,17 +578,18 @@ class GameState:
         num_bees = len(self.bees)
         try:
             while True:
-                self.beehive.strategy(self) # Bees invade from hive
-                yield None # After yielding, players have time to place ants
+                self.beehive.strategy(self)  # Bees invade from hive
+                yield None  # After yielding, players have time to place ants
                 self.ants_take_actions()
                 self.time += 1
-                yield None # After yielding, wait for throw leaf animation to play, then ask bees to take action
+                yield None  # After yielding, wait for throw leaf animation to play, then ask bees to take action
                 num_bees = self.bees_take_actions(num_bees)
         except AntsWinException:
             print('All bees are vanquished. You win!')
             yield True
         except AntsLoseException:
-            print('The bees reached homebase or the queen ant queen has perished. Please try again :(')
+            print(
+                'The bees reached homebase or the queen ant queen has perished. Please try again :(')
             yield False
 
     def deploy_ant(self, place_name, ant_type_name):
