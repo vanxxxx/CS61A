@@ -119,14 +119,12 @@ class Ant(Insect):
         if place.ant is None:
             place.ant = self
         else:
-            # BEGIN Problem b
-            if place.ant.is_container and place.ant.ant_contained is None:
-                if not self.is_container :
-                    place.ant.ant_contained = self
-            elif self.is_container and self.ant_contained is None:
-                if not place.ant.is_container :
-                    self.ant_contained = place.ant
-                    place.ant = self
+            # BEGIN Problem bees
+            if place.ant.can_contain(self):
+                place.ant.ant_contained = self
+            elif self.can_contain(place.ant):
+                self.ant_contained = place.ant
+                place.ant = self
             else:
                 assert place.ant is None, 'Too many ants in {0}'.format(place)
             # END Problem 8b
@@ -228,7 +226,7 @@ class ShortThrower(ThrowerAnt):
     upper_bound = 3
     # OVERRIDE CLASS ATTRIBUTES HERE
     # BEGIN Problem 4
-    implemented = True   # Change to True to view in the GUI
+    implemented  = True   # Change to True to view in the GUI
     # END Problem 4
 
 
@@ -371,11 +369,27 @@ class BodyguardAnt(ContainerAnt):
     # BEGIN Problem 8c
     def __init__(self,health = 2):
         super().__init__(health)
-
     # END Problem 8c
 
 # BEGIN Problem 9
 # The TankAnt class
+class TankAnt(ContainerAnt):
+    name = 'Tank'
+    food_cost = 6
+    implemented = True
+    damage = 1
+
+    def __init__(self,health = 2):
+        super().__init__(health)
+
+    def action(self,gamestate):
+        target = self.place.bees[:]
+        for bees in target:
+            if bees :
+                bees.reduce_health(self.damage)
+        super().action(gamestate)
+
+
 # END Problem 9
 
 
