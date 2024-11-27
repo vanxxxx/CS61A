@@ -53,6 +53,7 @@ class Insect:
 
     next_id = 0  # Every insect gets a unique id number
     damage = 0
+    is_waterproof = False
     # ADD CLASS ATTRIBUTES HERE
 
     def __init__(self, health, place=None):
@@ -226,7 +227,7 @@ class ShortThrower(ThrowerAnt):
     upper_bound = 3
     # OVERRIDE CLASS ATTRIBUTES HERE
     # BEGIN Problem 4
-    implemented  = True   # Change to True to view in the GUI
+    implemented = True   # Change to True to view in the GUI
     # END Problem 4
 
 
@@ -279,34 +280,39 @@ class FireAnt(Ant):
 # BEGIN Problem 6
 # The WallAnt class
 # END Problem 6
+
+
 class WallAnt(Ant):
     name = 'Wall'
     food_cost = 4
     implemented = True
-    def __init__(self,health = 4):
+
+    def __init__(self, health=4):
         super().__init__(health)
-        
+
 # BEGIN Problem 7
 # The HungryAnt Class
+
+
 class HungryAnt(Ant):
     name = 'Hungry'
     chewing_turns = 3
     food_cost = 4
     implemented = True
 
-    def __init__(self,health = 1):
+    def __init__(self, health=1):
         super().__init__(health)
         self.turns_to_chew = 0
 
-    def action(self,gamestate):
+    def action(self, gamestate):
         if self.turns_to_chew == 0:
             if self.place.bees:
                 target = random_bee(self.place.bees)
                 target.reduce_health(target.health)
                 self.turns_to_chew = self.chewing_turns
         else:
-            self.turns_to_chew -=1
-        
+            self.turns_to_chew -= 1
+
 
 # END Problem 7
 
@@ -324,7 +330,7 @@ class ContainerAnt(Ant):
     def can_contain(self, other):
         # BEGIN Problem 8a
         "*** YOUR CODE HERE ***"
-        if self.ant_contained is None and other.is_container is False:
+        if self.anlst_contained is None and other.is_container is False:
             return True
         else:
             return False
@@ -367,25 +373,28 @@ class BodyguardAnt(ContainerAnt):
     implemented = True   # Change to True to view in the GUI
     # OVERRIDE CLASS ATTRIBUTES HERE
     # BEGIN Problem 8c
-    def __init__(self,health = 2):
+
+    def __init__(self, health=2):
         super().__init__(health)
     # END Problem 8c
 
 # BEGIN Problem 9
 # The TankAnt class
+
+
 class TankAnt(ContainerAnt):
     name = 'Tank'
     food_cost = 6
     implemented = True
     damage = 1
 
-    def __init__(self,health = 2):
+    def __init__(self, health=2):
         super().__init__(health)
 
-    def action(self,gamestate):
+    def action(self, gamestate):
         target = self.place.bees[:]
         for bees in target:
-            if bees :
+            if bees:
                 bees.reduce_health(self.damage)
         super().action(gamestate)
 
@@ -401,6 +410,9 @@ class Water(Place):
         its health to 0."""
         # BEGIN Problem 10
         "*** YOUR CODE HERE ***"
+        super().add_insect(insect)
+        if not insect.is_waterproof:
+            insect.reduce_health(insect.health)
         # END Problem 10
 
 # BEGIN Problem 11
