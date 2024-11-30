@@ -103,6 +103,7 @@ class Ant(Insect):
     implemented = False  # Only implemented Ant classes should be instantiated
     food_cost = 0
     is_container = False
+    is_doubled = False
     # ADD CLASS ATTRIBUTES HERE
 
     def __init__(self, health=1):
@@ -145,6 +146,13 @@ class Ant(Insect):
         """Double this ants's damage, if it has not already been doubled."""
         # BEGIN Problem 12
         "*** YOUR CODE HERE ***"
+        if self.is_container:
+            if self.ant_contained:
+                self.ant_contained.double()
+        if self.is_doubled == False:
+            self.damage = self.damage * 2
+            self.is_doubled = True
+
         # END Problem 12
 
 
@@ -455,6 +463,13 @@ class QueenAnt(ThrowerAnt):
         """
         # BEGIN Problem 12
         "*** YOUR CODE HERE ***"
+        super().action(gamestate)
+        p = self.place.exit
+        while p:
+            if p.ant:
+                p.ant.double()
+            p = p.exit
+
         # END Problem 12
 
     def reduce_health(self, amount):
@@ -463,6 +478,9 @@ class QueenAnt(ThrowerAnt):
         """
         # BEGIN Problem 12
         "*** YOUR CODE HERE ***"
+        super().reduce_health(amount)
+        if self.health <= 0:
+            ants_lose()
         # END Problem 12
 
 
