@@ -523,9 +523,10 @@ class LaserAnt(ThrowerAnt):
 
     name = "Laser"
     food_cost = 10
+    damage = 2
     # OVERRIDE CLASS ATTRIBUTES HERE
     # BEGIN Problem Optional 2
-    implemented = False  # Change to True to view in the GUI
+    implemented = True  # Change to True to view in the GUI
     # END Problem Optional 2
 
     def __init__(self, health=1):
@@ -534,11 +535,26 @@ class LaserAnt(ThrowerAnt):
 
     def insects_in_front(self):
         # BEGIN Problem Optional 2
-        return {}
+        insects = {}
+        p = self.place
+        dis = 0
+        while not p.is_hive:
+            if p.ant and p.ant is not self:
+                insects[p.ant] = dis
+            for bee in p.bees:
+                if bee:
+                    insects[bee] = dis
+            p = p.entrance
+            dis += 1
+
+        return insects
         # END Problem Optional 2
 
     def calculate_damage(self, distance):
         # BEGIN Problem Optional 2
+        damage = self.damage - 0.0625 * self.insects_shot - distance * 0.25
+        if damage > 0:
+            return damage
         return 0
         # END Problem Optional 2
 
