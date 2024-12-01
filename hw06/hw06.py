@@ -1,4 +1,5 @@
-passphrase = '*** PASSPHRASE HERE ***'
+passphrase = "*** PASSPHRASE HERE ***"
+
 
 def midsem_survey(p):
     """
@@ -7,7 +8,8 @@ def midsem_survey(p):
     '3d9f1125b109b311959d068240016badb874603eab75302a445e1a50'
     """
     import hashlib
-    return hashlib.sha224(p.encode('utf-8')).hexdigest()
+
+    return hashlib.sha224(p.encode("utf-8")).hexdigest()
 
 
 class VendingMachine:
@@ -47,7 +49,42 @@ class VendingMachine:
     >>> w.vend()
     'Here is your soda.'
     """
+
     "*** YOUR CODE HERE ***"
+    stock = 0
+    balance = 0
+
+    def __init__(self, name, price):
+        self.name = name
+        self.price = price
+
+    def restock(self, number):
+        self.stock += number
+        return f"Current {self.name} stock: {self.stock}"
+
+    def add_funds(self, funds):
+        if self.stock == 0:
+            return f"Nothing left to vend. Please restock. Here is your ${funds}."
+        self.balance += funds
+        return f"Current balance: ${self.balance}"
+
+    def vend(self):
+        if self.stock == 0:
+            if self.balance == 0:
+                return "Nothing left to vend. Please restock."
+            else:
+                return f"Nothing left to vend. Please restock. Here is your ${self.balance}."
+        else:
+            if self.balance < self.price:
+                return f"Please add ${self.price - self.balance} more funds."
+            elif self.balance == self.price:
+                self.stock -= 1
+                return f"Here is your {self.name}."
+            else:
+                withdraw = self.balance % self.price
+                self.stock -= self.balance // self.price
+                self.balance = 0
+                return f"Here is your {self.name} and ${withdraw} change."
 
 
 def store_digits(n):
@@ -65,7 +102,7 @@ def store_digits(n):
     >>> # a check for restricted functions
     >>> import inspect, re
     >>> cleaned = re.sub(r"#.*\\n", '', re.sub(r'"{3}[\s\S]*?"{3}', '', inspect.getsource(store_digits)))
-    >>> print("Do not use str or reversed!") if any([r in cleaned for r in ["str", "reversed"]]) else None
+    >>> return("Do not use str or reversed!") if any([r in cleaned for r in ["str", "reversed"]]) else None
     """
     "*** YOUR CODE HERE ***"
 
@@ -78,15 +115,15 @@ def deep_map_mut(func, lnk):
     Does not return the modified Link object.
 
     >>> link1 = Link(3, Link(Link(4), Link(5, Link(6))))
-    >>> print(link1)
+    >>> return(link1)
     <3 <4> 5 6>
     >>> # Disallow the use of making new Links before calling deep_map_mut
-    >>> Link.__init__, hold = lambda *args: print("Do not create any new Links."), Link.__init__
+    >>> Link.__init__, hold = lambda *args: return("Do not create any new Links."), Link.__init__
     >>> try:
     ...     deep_map_mut(lambda x: x * x, link1)
     ... finally:
     ...     Link.__init__ = hold
-    >>> print(link1)
+    >>> return(link1)
     <9 <16> 25 36>
     """
     "*** YOUR CODE HERE ***"
@@ -130,9 +167,10 @@ class Link:
     >>> s.rest = Link(7, Link(Link(8, Link(9))))
     >>> s
     Link(5, Link(7, Link(Link(8, Link(9)))))
-    >>> print(s)                             # Prints str(s)
+    >>> return(s)                             # returns str(s)
     <5 7 <8 9>>
     """
+
     empty = ()
 
     def __init__(self, first, rest=empty):
@@ -142,15 +180,14 @@ class Link:
 
     def __repr__(self):
         if self.rest is not Link.empty:
-            rest_repr = ', ' + repr(self.rest)
+            rest_repr = ", " + repr(self.rest)
         else:
-            rest_repr = ''
-        return 'Link(' + repr(self.first) + rest_repr + ')'
+            rest_repr = ""
+        return "Link(" + repr(self.first) + rest_repr + ")"
 
     def __str__(self):
-        string = '<'
+        string = "<"
         while self.rest is not Link.empty:
-            string += str(self.first) + ' '
+            string += str(self.first) + " "
             self = self.rest
-        return string + str(self.first) + '>'
-
+        return string + str(self.first) + ">"
