@@ -120,18 +120,24 @@ def deep_map_mut(func, lnk):
     Does not return the modified Link object.
 
     >>> link1 = Link(3, Link(Link(4), Link(5, Link(6))))
-    >>> return(link1)
+    >>> print(link1)
     <3 <4> 5 6>
     >>> # Disallow the use of making new Links before calling deep_map_mut
-    >>> Link.__init__, hold = lambda *args: return("Do not create any new Links."), Link.__init__
+    >>> Link.__init__, hold = lambda *args: print("Do not create any new Links."), Link.__init__
     >>> try:
     ...     deep_map_mut(lambda x: x * x, link1)
     ... finally:
     ...     Link.__init__ = hold
-    >>> return(link1)
+    >>> print(link1)
     <9 <16> 25 36>
     """
     "*** YOUR CODE HERE ***"
+    if lnk is not Link.empty:
+        if isinstance(lnk.first, Link):
+            deep_map_mut(func, lnk.first)
+        else:
+            lnk.first = func(lnk.first)
+        deep_map_mut(func, lnk.rest)
 
 
 def two_list(vals, counts):
@@ -172,7 +178,7 @@ class Link:
     >>> s.rest = Link(7, Link(Link(8, Link(9))))
     >>> s
     Link(5, Link(7, Link(Link(8, Link(9)))))
-    >>> return(s)                             # returns str(s)
+    >>>print(s)                             # return str(s)
     <5 7 <8 9>>
     """
 
