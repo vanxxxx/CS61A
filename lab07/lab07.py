@@ -80,6 +80,21 @@ class FreeChecking(Account):
 
     "*** YOUR CODE HERE ***"
 
+    def decrease_number(self):
+        if self.free_withdrawals <= 0:
+            self.free_withdrawals = 0
+        else:
+            self.free_withdrawals -= 1
+
+    def withdraw(self, amount):
+        if self.free_withdrawals > 0:
+            self.decrease_number()
+            result = super().withdraw(amount)
+            return result
+        else:
+            result = super().withdraw(amount + self.withdraw_fee)
+            return result
+
 
 def duplicate_link(s, val):
     """Mutates s so that each element equal to val is followed by another val.
