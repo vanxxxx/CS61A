@@ -6,7 +6,11 @@
       )
   ))
 
-(define (my-filter pred s) 'YOUR-CODE-HERE)
+(define (my-filter pred s) 
+  (if (null? s) s
+    (if (pred (car s)) (cons (car s) (my-filter pred (cdr s))) 
+      (my-filter pred (cdr s)))
+  ))
 
 (define (interleave lst1 lst2) 'YOUR-CODE-HERE)
 
