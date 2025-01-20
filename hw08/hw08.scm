@@ -13,7 +13,13 @@
   ))
 
 (define (interleave lst1 lst2) 
-  (if (null? lst1) lst2 (cons (car lst1) (interleave lst2 (cdr lst1))) ) 
+  (if (null? lst1) lst2 (cons (car lst1) (interleave lst2 ())) ) 
   )
 
-(define (no-repeats s) 'YOUR-CODE-HERE)
+(define (no-repeats s) 
+  (if (null? s) s 
+    (cons (car s) (no-repeats (filter (lambda (x) (
+                                       not(= x (car s))
+                                       )) s))  )
+    )
+  )
