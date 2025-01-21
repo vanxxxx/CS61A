@@ -88,6 +88,14 @@ def eval_and(expressions):
     True
     """
     "*** YOUR CODE HERE ***"
+    if expressions is nil:
+        return True
+    elif calc_eval(expressions.first) is scheme_f:
+        return False
+    elif expressions.rest is nil:
+        return calc_eval(expressions.first)
+    else:
+        return eval_and(expressions.rest)
 
 
 bindings = {}
