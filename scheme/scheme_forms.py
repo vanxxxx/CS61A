@@ -86,6 +86,8 @@ def do_begin_form(expressions, env):
     3
     """
     validate_form(expressions, 1)
+    from scheme_eval_apply import eval_all
+
     return eval_all(expressions, env)
 
 
