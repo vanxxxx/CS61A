@@ -120,6 +120,8 @@ def do_if_form(expressions, env):
     >>> do_if_form(read_line("(#f (print 2) (print 3))"), env) # evaluating (if #f (print 2) (print 3))
     3
     """
+    from scheme_eval_apply import scheme_eval
+
     validate_form(expressions, 2, 3)
     if is_scheme_true(scheme_eval(expressions.first, env)):
         return scheme_eval(expressions.rest.first, env)
@@ -142,7 +144,20 @@ def do_and_form(expressions, env):
     False
     """
     # BEGIN PROBLEM 12
+
     "*** YOUR CODE HERE ***"
+
+    from scheme_eval_apply import scheme_eval
+
+    if len(expressions) == 0:
+        return True
+    first = scheme_eval(expressions.first, env)
+    if is_scheme_false(first):
+        return False
+    elif expressions.rest == nil:
+        return first
+    else:
+        return do_and_form(expressions.rest, env)
     # END PROBLEM 12
 
 
@@ -162,6 +177,17 @@ def do_or_form(expressions, env):
     """
     # BEGIN PROBLEM 12
     "*** YOUR CODE HERE ***"
+    from scheme_eval_apply import scheme_eval
+
+    if len(expressions) == 0:
+        return False
+    first = scheme_eval(expressions.first, env)
+    if is_scheme_true(first):
+        return first
+    elif expressions.rest == nil:
+        return False
+    else:
+        return do_or_form(expressions.rest, env)
     # END PROBLEM 12
 
 
