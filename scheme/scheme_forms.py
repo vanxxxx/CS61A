@@ -226,6 +226,8 @@ def do_let_form(expressions, env):
     >>> do_let_form(read_line("(((x 2) (y 3)) (+ x y))"), env)
     5
     """
+    from scheme_eval_apply import eval_all, scheme_eval
+
     validate_form(expressions, 2)
     let_env = make_let_frame(expressions.first, env)
     return eval_all(expressions.rest, let_env)
@@ -241,6 +243,15 @@ def make_let_frame(bindings, env):
     names = vals = nil
     # BEGIN PROBLEM 14
     "*** YOUR CODE HERE ***"
+    from scheme_eval_apply import eval_all, scheme_eval
+
+    while bindings is not nil:
+        first = bindings.first
+        validate_form(first, 2, 2)
+        names = Pair(first.first, names)
+        vals = Pair(scheme_eval(first.rest.first, env), vals)
+        bindings = bindings.rest
+    validate_formals(names)
     # END PROBLEM 14
     return env.make_child_frame(names, vals)
 
