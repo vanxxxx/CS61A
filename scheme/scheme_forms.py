@@ -197,6 +197,8 @@ def do_cond_form(expressions, env):
     >>> do_cond_form(read_line("((#f (print 2)) (#t 3))"), create_global_frame())
     3
     """
+    from scheme_eval_apply import eval_all, scheme_eval
+
     while expressions is not nil:
         clause = expressions.first
         validate_form(clause, 1)
@@ -209,6 +211,10 @@ def do_cond_form(expressions, env):
         if is_scheme_true(test):
             # BEGIN PROBLEM 13
             "*** YOUR CODE HERE ***"
+            if clause.rest == nil:
+                return test
+            else:
+                return eval_all(clause.rest, env)
             # END PROBLEM 13
         expressions = expressions.rest
 
