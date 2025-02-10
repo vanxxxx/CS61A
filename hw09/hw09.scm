@@ -1,4 +1,9 @@
-(define (curry-cook formals body) 'YOUR-CODE-HERE)
+(define (curry-cook formals body) 
+  (cond 
+    ((null? (cdr formals)) (list `lambda (list(car formals)) body ))
+    (else (list `lambda (list(car formals)) (curry-cook (cdr formals ) body)))
+  )
+  )
 
 (define (curry-consume curry args)
   'YOUR-CODE-HERE)
