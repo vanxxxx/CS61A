@@ -31,7 +31,9 @@ CREATE TABLE remaining AS
   SELECT course , (SUM(seats) - MAX(seats)) AS remaining FROM finals, sizes WHERE hall = room GROUP BY course;
 
 CREATE TABLE sharing AS
-  SELECT "REPLACE THIS LINE WITH YOUR SOLUTION";
+  SELECT a.course , COUNT(DISTINCT a.hall) AS shared
+  FROM finals AS a, finals AS b
+  WHERE a.hall = b.hall and a.course <> b.course GROUP BY a.course;
 
 CREATE TABLE pairs AS
   SELECT "REPLACE THIS LINE WITH YOUR SOLUTION";
